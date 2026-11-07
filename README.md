@@ -23,7 +23,7 @@ React, Vite, TypeScript, React Router, Tailwind CSS, Framer Motion, Lucide, Reac
 4. In Supabase Authentication settings, enable email/password and set the Site URL to your local URL. Add `http://localhost:5173/profile` and `http://localhost:5173/reset-password` as redirect URLs.
 5. Run `npm install`, `npm run dev`, then open the URL printed by Vite.
 
-Without Supabase environment variables the UI will start in disconnected mode to make configuration easy, but authentication, catalogue data, cart and checkout require a connected project. The `/setup` route describes the same setup steps.
+Without valid Supabase environment variables (including untouched example placeholders) the UI starts in disconnected mode, explains which setting is wrong, and blocks auth requests instead of showing a fetch failure. Authentication, catalogue data, cart and checkout require a connected project. The `/setup` route describes the same setup steps.
 
 ## Security and data model
 
@@ -33,7 +33,7 @@ Tables: `profiles`, `categories`, `products`, `cart_items`, `orders`, `order_ite
 
 ## Production / Vercel
 
-- Import the repository into Vercel and add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in project environment variables.
+- Import the repository into Vercel and add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in project environment variables for Preview and Production. These exact `VITE_` names are read by Vite at build time. Use the Project URL and anon/publishable key from the same Supabase project; do not use the service-role key. Redeploy after changing variables because Vite embeds them into the build.
 - Configure the production domain as the Supabase Auth Site URL and allow `/profile` and `/reset-password` redirect URLs on that domain.
 - Apply migrations to the production Supabase database before serving traffic.
 - `vercel.json` rewrites client routes to the SPA entry point so nested URLs survive refresh.
